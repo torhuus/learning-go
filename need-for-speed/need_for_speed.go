@@ -1,5 +1,7 @@
 package speed
 
+import "fmt"
+
 // TODO: define the 'Car' type struct
 type Car struct {
 	battery      int
@@ -40,8 +42,13 @@ func Drive(car Car) Car {
 	return car
 }
 
+type Shitman struct {
+	shii int
+}
+
 // CanFinish checks if a car is able to finish a certain track.
 func CanFinish(car Car, track Track) bool {
+	newShitman := Shitman{shii: 9}
 	// How many times can we run the car? rem battery div by drain
 	r := car.battery / car.batteryDrain
 
