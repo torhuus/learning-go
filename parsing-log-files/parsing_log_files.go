@@ -2,6 +2,7 @@ package parsinglogfiles
 
 import (
 	"regexp"
+	"strings"
 )
 
 func IsValidLine(text string) bool {
@@ -12,15 +13,23 @@ func IsValidLine(text string) bool {
 }
 
 func SplitLogLine(text string) []string {
-	validPattern := `^<[-=*~]*>$`
+
+	if text == "" {
+		return []string{""}
+	}
+
+	validPattern := `<[~*=-]*>`
 
 	re := regexp.MustCompile(validPattern)
+
 	sections := re.Split(text, -1)
 
 	var result []string
+
 	for _, section := range sections {
-		if section != "" {
-			result = append(result, section)
+		trimmed := strings.TrimSpace(section)
+		if trimmed != "" {
+			result = append(result, trimmed)
 		}
 	}
 
@@ -28,7 +37,22 @@ func SplitLogLine(text string) []string {
 }
 
 func CountQuotedPasswords(lines []string) int {
-	panic("Please implement the CountQuotedPasswords function")
+	passwords := 0
+
+	validPattern := `"(?i)([^"]*?\bpassword\b[^"]*?)"`
+
+	re := regexp.MustCompile(validPattern)
+
+	for _, line := range lines {
+		matches := re.FindAllString(line, -1)
+		for _, match := range matches {
+			if match != "" {
+				passwords++
+			}
+		}
+	}
+
+	return passwords
 }
 
 func RemoveEndOfLineText(text string) string {
