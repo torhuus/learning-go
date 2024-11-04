@@ -38,3 +38,5 @@ In an effort to get an overview of the Go programming language I have worked thr
 - Type Assertion
 - Errors
 - First class functions
+
+- [x] This has been completed and will most likely not receive any further updates.
